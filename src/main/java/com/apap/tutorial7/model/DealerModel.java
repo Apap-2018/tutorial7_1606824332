@@ -1,9 +1,21 @@
 package com.apap.tutorial7.model;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * 
@@ -12,6 +24,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "dealer")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DealerModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +42,7 @@ public class DealerModel implements Serializable{
 	
 //	sisi yang many dibuat OneToMany sementara sisi yang one dibuat ManyToOne dengan membuat foreign key
 //	ini dia buat list dari yang sisi one, karena dia punya banyak entity one itu kan
+	@JsonIgnore
 	@OneToMany(mappedBy = "dealer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<CarModel> listCar;
 
